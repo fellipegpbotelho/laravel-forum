@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
-use Illuminate\Http\Request;
+use App\Events\NewThread;
 use App\Http\Requests\ThreadsRequest;
 
 class ThreadsController extends Controller
@@ -52,6 +52,8 @@ class ThreadsController extends Controller
         $thread->title = $request->input('title');
         $thread->body = $request->input('body');
         $thread->update();
+
+        broadcast(new NewThread($thread));
 
         return redirect('/threads/' . $thread->id);
     }

@@ -1,19 +1,19 @@
 webpackJsonp([2],{
 
-/***/ 40:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(41);
+module.exports = __webpack_require__(43);
 
 
 /***/ }),
 
-/***/ 41:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.Vue = __webpack_require__(4);
 
-Vue.component('threads', __webpack_require__(44));
+Vue.component('threads', __webpack_require__(46));
 
 var app = new Vue({
     el: '#app'
@@ -21,15 +21,15 @@ var app = new Vue({
 
 /***/ }),
 
-/***/ 44:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(45)
+var __vue_script__ = __webpack_require__(47)
 /* template */
-var __vue_template__ = __webpack_require__(46)
+var __vue_template__ = __webpack_require__(48)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69,7 +69,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 45:
+/***/ 47:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -145,13 +145,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
+
         this.getThreads();
+
+        Echo.channel('new.thread').listen('NewThread', function (e) {
+            alert("Novo tópico");
+        });
     }
 });
 
 /***/ }),
 
-/***/ 46:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -391,4 +396,4 @@ module.exports = function normalizeComponent (
 
 /***/ })
 
-},[40]);
+},[42]);

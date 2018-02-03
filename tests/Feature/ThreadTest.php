@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Thread;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,6 +22,7 @@ class ThreadTest extends TestCase
         $user = factory(\App\User::class)->create();
         $this->seed('ThreadsTableSeeder');
 
+        /** @var Collection $threads */
         $threads = Thread::orderBy('updated_at', 'desc')
             ->paginate();
 
