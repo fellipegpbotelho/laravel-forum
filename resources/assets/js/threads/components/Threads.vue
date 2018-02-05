@@ -12,12 +12,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="thread in threads_response.data">
+                <tr v-for="thread in threads_response.data" :class="{'lime lighten-4' : thread.fixed}">
                     <td>{{ thread.id }}</td>
                     <td>{{ thread.title }}</td>
-                    <td>0</td>
+                    <td>{{ thread.replies_count }}</td>
                     <td>
-                        <a :href="/threads/ + thread.id">{{ open }}</a>
+                        <a :href="'/threads/ ' + thread.id" class="btn">{{ open }}</a>
+                        <a :href="'/thread/pin/' + thread.id" class="btn" v-if="logged.role === 'admin'">fixar</a>
+                        <a :href="'/thread/close/' + thread.id" class="btn" v-if="logged.role === 'admin'">fechar</a>
                     </td>
                 </tr>
                 </tbody>
@@ -53,8 +55,9 @@
         ],
         data(){
             return {
-                'threads_response': [],
-                'threads_to_save': {
+                logged: window.user || {},
+                threads_response: [],
+                threads_to_save: {
                     title: '',
                     body: ''
                 }
@@ -63,12 +66,12 @@
         methods: {
             save(){
                 window.axios.post('/threads', this.threads_to_save).then((response) => {
-                    this.getThreads()
+                    this.getThreads();
                 })
             },
             getThreads(){
                 window.axios.get('/threads').then((response) => {
-                    this.threads_response = response.data
+                    this.threads_response = response.data;
                 })
             }
         },
@@ -76,7 +79,7 @@
 
             this.getThreads();
 
-            Echo.channel('new_thread')
+            Echo.channel('new.thread')
                 .listen('NewThread', (e) => {
                     console.log(e)
                     if(e.thread){

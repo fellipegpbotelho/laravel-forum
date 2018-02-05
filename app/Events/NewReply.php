@@ -9,22 +9,22 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\Thread;
+use App\Reply;
 
-class NewThread implements ShouldBroadcast
+class NewReply implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $thread;
+    public $reply;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Thread $thread)
+    public function __construct(Reply $reply)
     {
-        $this->thread = $thread;
+        $this->reply = $reply;
     }
 
     /**
@@ -34,6 +34,6 @@ class NewThread implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('new.thread');
+        return new Channel('new.reply.' . $this->reply->thread_id);
     }
 }

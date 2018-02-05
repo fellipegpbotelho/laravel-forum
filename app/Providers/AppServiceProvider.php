@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Providers;
+use App\Observers\PhotoUserObserver;
+use App\Reply;
+use App\Observers\ReplyObserver;
 
+use App\User;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Schema::defaultStringLength(191);
+
+        Reply::observe(ReplyObserver::class);
+        User::observe(PhotoUserObserver::class);
     }
 
     /**
